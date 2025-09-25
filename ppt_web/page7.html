@@ -46,7 +46,7 @@
         <!-- Right Column: Image and Future Potential -->
         <div class="column column-right">
             <h4>RAG基本原理：RAG如同让AI先从知识库中检索资料，再组织语言回答</h4>
-            <img src="../pics/rag.png" alt="RAG 原理示意图" width="80%" height="80%">
+            <img src="" alt="RAG 原理示意图" width="80%" height="80%" id="rag-image">
 
             <div style="text-align: left; width: 100%; margin-top: 30px;">
                 <h4 style="border: none; padding: 0; margin-bottom: 15px;">未来潜力</h4>
@@ -58,5 +58,10 @@
         </div>
     </div>
 
+    <script>
+        // Set image path
+        const ragImage = document.getElementById('rag-image');
+        ragImage.src = 'pics/rag.png';
+    </script>
 </body>
 </html>

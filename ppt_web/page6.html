@@ -5,10 +5,11 @@
     <title>第四章：我们当前在做什么？</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
 <body class="slide-body">
 
-    <h2 style="margin-bottom: 15px;">我们当前的工作：比“微调”更聪明的“应用层创新”</h2>
+    <h2 style="margin-bottom: 15px;">我们当前的工作：比"微调"更聪明的"应用层创新"</h2>
     
     <!-- Mermaid Diagram -->
     <div class="mermaid" style="margin-bottom: 15px;">
@@ -29,7 +30,7 @@
 
     <!-- Thumbnail Image -->
     <div class="thumbnail-container" style="margin-top: 0;">
-        <img src="../pics/main_flow_1_1.png" alt="示意图" class="thumbnail-image" id="thumbnail-image" style="max-height: 20vh;">
+        <img src="pics/main_flow_1_1.png" alt="示意图" class="thumbnail-image" id="thumbnail-image" style="max-height: 20vh;">
     </div>
 
     <!-- The Modal -->
@@ -38,10 +39,8 @@
         <img class="modal-content" id="modal-image">
     </div>
 
-    <!-- Scripts -->
-    <script type="module">
+    <script>
       // Mermaid Initialization
-      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
       mermaid.initialize({
         startOnLoad: true,
         theme: 'base',
@@ -90,7 +89,7 @@
 
       // Modal, Zoom, and Pan Logic
       const modal = document.getElementById("myModal");
-      const thumbnail = document.getElementById("thumbnail-image");
+      const thumbnailImg = document.getElementById("thumbnail-image");
       const modalImg = document.getElementById("modal-image");
       const closeBtn = document.getElementById("modal-close");
 
@@ -112,7 +111,7 @@
           applyTransform();
       }
 
-      thumbnail.onclick = function(){
+      thumbnailImg.onclick = function(){
           modal.style.display = "flex";
           modalImg.src = this.src;
           resetTransform();
@@ -163,7 +162,6 @@
 
           applyTransform();
       });
-
     </script>
 
 </body>
