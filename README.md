@@ -31,15 +31,14 @@ python -m http.server 8000
 npx serve .
 ```
 
-3. 访问 `http://localhost:8000/ppt_web/`
+3. 访问 `http://localhost:8000/`
 
 ## 项目结构
 
 ```
-├── ppt_web/          # 主要的PPT页面
-│   ├── index.html    # 主页面
-│   ├── page1-10.html # 各个幻灯片页面
-│   └── style.css     # 样式文件
+├── index.html        # 主页面
+├── page1-10.html     # 各个幻灯片页面
+├── style.css         # 样式文件
 ├── pics/             # 图片资源
 ├── vercel.json       # Vercel部署配置
 └── README.md         # 项目说明
