@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第四章：我们当前在做什么？</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="slide-body">
+
+    <h2 style="margin-bottom: 15px;">我们当前的工作：比“微调”更聪明的“应用层创新”</h2>
+    
+    <!-- Mermaid Diagram -->
+    <div class="mermaid" style="margin-bottom: 15px;">
+      graph TD;
+        A["<div style='padding:10px;'><b>我们系统 (中央厨房)</b><br><i class='fas fa-brain'></i></div>"]:::center;
+        
+        B["<div style='padding:5px;'><b>意图识别</b><br>精准理解用户</div>"]:::satellite;
+        C["<div style='padding:5px;'><b>RAG</b><br>确保回答有据可依</div>"]:::satellite;
+        D["<div style='padding:5px;'><b>Tool Use</b><br>对接真实世界</div>"]:::satellite;
+
+        A --> B;
+        A --> C;
+        A --> D;
+
+        classDef center fill:#2c3e50,stroke:#00aaff,stroke-width:2px,color:#f0f0f0,rx:10,ry:10;
+        classDef satellite fill:#2c3e50,stroke:#34495e,stroke-width:1px,color:#f0f0f0,rx:10,ry:10;
+    </div>
+
+    <!-- Thumbnail Image -->
+    <div class="thumbnail-container" style="margin-top: 0;">
+        <img src="../pics/main_flow_1_1.png" alt="示意图" class="thumbnail-image" id="thumbnail-image" style="max-height: 20vh;">
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <span class="modal-close" id="modal-close">&times;</span>
+        <img class="modal-content" id="modal-image">
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+      // Mermaid Initialization
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            'background': 'transparent',
+            'primaryColor': '#2c3e50',
+            'primaryTextColor': '#f0f0f0',
+            'primaryBorderColor': '#34495e',
+            'lineColor': '#00aaff',
+            'textColor': '#f0f0f0',
+            'fontSize': '16px'
+        }
+      });
+
+      // Force SVG to scale proportionally after rendering
+      function scaleMermaidSVG() {
+        const svgElement = document.querySelector('.mermaid svg');
+        if (svgElement) {
+            svgElement.removeAttribute('height');
+            svgElement.removeAttribute('width');
+            svgElement.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+            svgElement.style.maxWidth = '100%';
+            svgElement.style.maxHeight = '55vh';
+            return true;
+        }
+        return false;
+      }
+
+      // Use MutationObserver to watch for mermaid rendering
+      const observer = new MutationObserver(() => {
+        if (scaleMermaidSVG()) {
+          observer.disconnect();
+        }
+      });
+      
+      observer.observe(document.querySelector('.mermaid'), {
+        childList: true,
+        subtree: true
+      });
+      
+      // Fallback timeout
+      setTimeout(() => {
+        scaleMermaidSVG();
+        observer.disconnect();
+      }, 2000);
+
+      // Modal, Zoom, and Pan Logic
+      const modal = document.getElementById("myModal");
+      const thumbnail = document.getElementById("thumbnail-image");
+      const modalImg = document.getElementById("modal-image");
+      const closeBtn = document.getElementById("modal-close");
+
+      let scale = 1, isDragging = false;
+      let startPos = { x: 0, y: 0 };
+      let currentTranslate = { x: 0, y: 0 };
+      let lastTranslate = { x: 0, y: 0 };
+
+      function applyTransform() {
+          modalImg.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${scale})`;
+      }
+
+      function resetTransform() {
+          scale = 1;
+          isDragging = false;
+          startPos = { x: 0, y: 0 };
+          currentTranslate = { x: 0, y: 0 };
+          lastTranslate = { x: 0, y: 0 };
+          applyTransform();
+      }
+
+      thumbnail.onclick = function(){
+          modal.style.display = "flex";
+          modalImg.src = this.src;
+          resetTransform();
+      }
+
+      closeBtn.onclick = function() {
+          modal.style.display = "none";
+      }
+
+      modalImg.onmousedown = function(event) {
+          event.preventDefault();
+          isDragging = true;
+          startPos.x = event.clientX - lastTranslate.x;
+          startPos.y = event.clientY - lastTranslate.y;
+          modalImg.classList.add('grabbing');
+      }
+
+      window.onmouseup = function() {
+          if (isDragging) {
+            isDragging = false;
+            lastTranslate.x = currentTranslate.x;
+            lastTranslate.y = currentTranslate.y;
+            modalImg.classList.remove('grabbing');
+          }
+      }
+
+      window.onmousemove = function(event) {
+          if (isDragging) {
+              currentTranslate.x = event.clientX - startPos.x;
+              currentTranslate.y = event.clientY - startPos.y;
+              applyTransform();
+          }
+      }
+
+      modal.addEventListener('wheel', function(event) {
+          event.preventDefault();
+          const rect = modalImg.getBoundingClientRect();
+          const mouseX = event.clientX - rect.left;
+          const mouseY = event.clientY - rect.top;
+
+          const newScale = event.deltaY < 0 ? scale * 1.1 : scale / 1.1;
+          const scaleRatio = newScale / scale;
+          scale = newScale;
+
+          currentTranslate.x = mouseX - (mouseX - currentTranslate.x) * scaleRatio;
+          currentTranslate.y = mouseY - (mouseY - currentTranslate.y) * scaleRatio;
+          lastTranslate = currentTranslate;
+
+          applyTransform();
+      });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI大模型技术解密与项目战略规划</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>AI技术解密</h1>
+                <p>暨项目战略规划</p>
+            </div>
+            <ul class="toc" id="toc">
+                <!-- TOC items will be injected by script -->
+            </ul>
+        </aside>
+        <main class="main-content">
+            <div class="iframe-wrapper">
+                <iframe name="content-frame" class="content-frame" id="content-frame" src="page1.html"></iframe>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const slides = [
+            { id: 1, title: '封面页', file: 'page1.html' },
+            { id: 2, title: '议程与核心问题', file: 'page2.html' },
+            { id: 3, title: '第一章：大模型的诞生', file: 'page3.html' },
+            { id: 4, title: '第二章：惊人的成本', file: 'page4.html' },
+            { id: 5, title: '第三章：企业的赛道', file: 'page5.html' },
+            { id: 6, title: '第四章(总览)：我们做什么', file: 'page6.html' },
+            { id: 7, title: '第四章(分述1)：知识库', file: 'page7.html' },
+            { id: 8, title: '第四章(分述2)：工具集', file: 'page8.html' },
+            { id: 9, title: '我们架构的价值', file: 'page9.html' },
+            { id: 10, title: '第五章：战略三步走', file: 'page10.html' }
+        ];
+
+        const tocElement = document.getElementById('toc');
+        const iframeElement = document.getElementById('content-frame');
+
+        function createTOC() {
+            let tocHTML = '';
+            slides.forEach(slide => {
+                tocHTML += `<li><a href="${slide.file}" target="content-frame" id="link-${slide.id}">${slide.id}. ${slide.title}</a></li>`;
+            });
+            tocElement.innerHTML = tocHTML;
+        }
+
+        function updateActiveLink() {
+            const currentPage = iframeElement.contentWindow.location.href.split('/').pop();
+            document.querySelectorAll('.toc a').forEach(a => {
+                if (a.href.endsWith(currentPage)) {
+                    a.classList.add('active');
+                } else {
+                    a.classList.remove('active');
+                }
+            });
+        }
+
+        window.onload = () => {
+            createTOC();
+            
+            // Initial active link setup
+            setTimeout(() => updateActiveLink(), 100);
+
+            iframeElement.onload = updateActiveLink;
+
+            tocElement.addEventListener('click', (e) => {
+                if(e.target.tagName === 'A') {
+                    // Use a slight delay to allow the iframe to start loading before updating the active state
+                    setTimeout(updateActiveLink, 50);
+                }
+            });
+        };
+    </script>
+</body>
+</html>

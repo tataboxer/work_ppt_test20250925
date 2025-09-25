@@ -1,0 +1,693 @@
+/* --- Overall --- */
+:root {
+    --bg-gradient-start: #1a1a1a;
+    --bg-gradient-end: #16213e;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --accent-color: #00aaff;
+    --accent-hover: #0088cc;
+    --card-bg: rgba(44, 62, 80, 0.5);
+    --border-color: #34495e;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    color: var(--text-primary);
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Main Layout --- */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar {
+    width: 280px;
+    background: var(--bg-gradient-start);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+    transition: width 0.3s ease;
+}
+
+.main-content {
+    flex-grow: 1;
+    height: 100vh;
+}
+
+.iframe-wrapper, .content-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+}
+
+/* --- Sidebar Content --- */
+.sidebar-header {
+    padding: 0 25px 25px 25px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header h1 {
+    font-size: 22px;
+    color: var(--accent-color);
+    margin: 0;
+    font-weight: 700;
+}
+
+.sidebar-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+.toc {
+    list-style-type: none;
+    padding: 15px 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.toc li a {
+    display: block;
+    padding: 13px 25px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 15px;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.toc li a:hover {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+.toc li a.active {
+    background-color: var(--card-bg);
+    color: var(--accent-color);
+    font-weight: 600;
+    border-left-color: var(--accent-color);
+}
+
+/* --- Slide Content General --- */
+.slide-body {
+    padding: 30px 80px; /* Reduced vertical padding to create more space */
+    background: transparent;
+    color: var(--text-primary);
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.slide-body h1, .slide-body h2, .slide-body h3 {
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+.slide-body h1 { font-size: 3vw; }
+.slide-body h2 { font-size: 2.5vw; }
+.slide-body h3 { font-size: 2vw; }
+
+.slide-body p, .slide-body li {
+    font-size: 1.2vw;
+    line-height: 1.8;
+    color: var(--text-primary);
+}
+
+.slide-body ul, .slide-body ol {
+    padding-left: 25px;
+}
+
+.slide-body strong {
+    color: var(--accent-color);
+}
+
+/* --- Specific Slide Layouts --- */
+
+/* Cover Page */
+.cover-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 0 !important; /* Override default padding */
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?auto=format&fit=crop&w=1400');
+    background-size: cover;
+    background-position: center;
+}
+.cover-layout h1 {
+    font-size: 64px;
+    border: none;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(0, 170, 255, 0.7);
+}
+.cover-layout p {
+    font-size: 24px;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Force Column Layout */
+.slide-column-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Aligns content vertically */
+    align-items: center; /* Aligns content horizontally */
+    height: 100%;
+    text-align: center;
+}
+
+
+
+/* Agenda Page */
+.agenda-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 800px;
+}
+.agenda-item {
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    border-left: 4px solid var(--accent-color);
+}
+.agenda-item i {
+    font-size: 2vw;
+    color: var(--accent-color);
+    margin-right: 25px;
+    width: 40px;
+}
+.agenda-text h3 {
+    border: none;
+    margin: 0 0 5px 0;
+    padding: 0;
+    font-size: 1.4vw;
+    text-align: left;
+}
+.agenda-text p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1vw;
+    text-align: left;
+}
+
+
+
+/* Conclusion Box - IMPROVED */
+.conclusion-box {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid var(--accent-color, #ff8c00);
+    background: rgba(255, 140, 0, 0.1);
+    color: var(--accent-color, #ff8c00);
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+
+
+/* --- Modal (Lightbox) with Pan & Zoom --- */
+.thumbnail-container {
+    margin-top: 40px;
+    text-align: center;
+}
+.thumbnail-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+.thumbnail-image:hover {
+    opacity: 0.8;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden; 
+    background-color: rgba(0,0,0,0.9);
+    /* New styles for centering */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    max-height: 90%;
+    /* New styles for panning */
+    position: relative; /* Important for positioning */
+    cursor: grab;
+    transition: transform 0.2s ease-out; /* Smooth zoom */
+}
+
+.modal-content.grabbing {
+    cursor: grabbing;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
+/* --- Mermaid Diagram Scaling --- */
+.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Page 3: Three Step Layout --- */
+.three-step-container {
+    position: relative;
+    width: 100%;
+    height: 75%;
+    margin-top: 5%;
+}
+
+.step-card {
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Added to distribute content vertically */
+    align-items: center;
+    padding: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.step-card h3 {
+    border: none;
+    padding: 0;
+    margin-bottom: 15px;
+    font-size: 1.5vw; /* Dynamic font size */
+}
+
+.step-card p {
+    font-size: 1.1vw; /* Dynamic font size */
+}
+
+.step-card .key-info {
+    font-size: 1.3vw; /* Larger font for key info */
+    font-weight: bold;
+    color: var(--text-secondary);
+}
+
+.step-arrow {
+    position: absolute;
+    top: 45%;
+    font-size: 48px;
+    color: var(--accent-color);
+}
+
+#step1 { left: 2%; }
+#step2 { left: 35%; }
+#step3 { left: 68%; }
+
+#arrow1 { left: 32.5%; }
+#arrow2 { left: 65.5%; }
+
+
+/* --- Page 4: Cost Layout --- */
+.cost-container {
+    position: relative;
+    width: 100%;
+    height: 80%;
+    margin-top: 2%;
+}
+
+.cost-card {
+    position: absolute;
+    width: 30%;
+    height: 60%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.cost-card .big-number {
+    font-size: 3vw; /* Responsive font size */
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+#cost1 { left: 2%; }
+#cost2 { left: 35%; }
+#cost3 { left: 68%; }
+
+.conclusion-box-absolute {
+    position: absolute;
+    bottom: 5%;
+    left: 2%;
+    width: 96%;
+    box-sizing: border-box;
+    border: 2px solid #ff8c00;
+    background: rgba(255, 140, 0, 0.1);
+    color: #ff8c00;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.5vw;
+    font-weight: bold;
+}
+
+
+/* --- Page 5: Table Layout --- */
+.table-container-absolute {
+    position: relative;
+    width: 100%;
+    height: 70%;
+    margin-top: 5%;
+}
+
+.table-container-absolute table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden; /* Ensures border-radius is respected */
+}
+
+.table-container-absolute th, .table-container-absolute td {
+    border: 1px solid var(--border-color);
+    padding: 1.5vh; /* Use viewport height for responsive padding */
+    text-align: left;
+    font-size: 1.5vh;
+    vertical-align: middle; /* Centered as requested */
+}
+
+.table-container-absolute th {
+    background-color: rgba(0, 170, 255, 0.2);
+    color: var(--accent-color);
+    font-size: 1.8vh;
+}
+
+.table-container-absolute .highlight-row {
+    background-color: rgba(40, 167, 69, 0.15);
+}
+
+
+/* --- Page 7: Two Column Layout --- */
+.two-column-container {
+    position: relative;
+    width: 100%;
+    height: 85%;
+    margin-top: 20px;
+}
+
+.column {
+    position: absolute;
+    top: 0;
+    width: 48%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 25px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.column-left {
+    left: 0;
+}
+
+.column-left h4:first-child {
+    position: absolute;
+    top: 3%;
+    left: 5%;
+    width: 90%;
+    margin: 0;
+    font-size: 1.4vw;
+}
+
+.column-left p:first-of-type {
+    position: absolute;
+    top: 12%;
+    left: 5%;
+    width: 90%;
+    margin: 0;
+    font-size: 1.1vw;
+}
+
+.column-left table {
+    position: absolute;
+    top: 25%;
+    left: 5%;
+    width: 90%;
+    height: 30%;
+}
+
+.column-left h4:nth-of-type(2) {
+    position: absolute;
+    top: 60%;
+    left: 5%;
+    width: 90%;
+    margin: 0;
+    font-size: 1.4vw;
+}
+
+.column-left ul {
+    position: absolute;
+    top: 68%;
+    left: 5%;
+    width: 90%;
+    margin: 0;
+    padding-left: 1.5vw;
+    font-size: 1.1vw;
+}
+
+.column-left p:last-child {
+    position: absolute;
+    top: 85%;
+    left: 5%;
+    width: 90%;
+    margin: 0;
+    font-size: 1.1vw;
+}
+
+.column-right {
+    left: 52%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.column-right img {
+    max-width: 100%;
+    max-height: 80%;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.column-right .caption {
+    margin-top: 15px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.column table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.column th, .column td {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: left;
+    font-size: 1.1vw;
+}
+
+.column th {
+    background-color: var(--card-bg);
+    color: var(--accent-color);
+}
+
+
+/* --- Page 8: Quadrant Layout --- */
+.quadrant-layout-container {
+    position: relative;
+    width: 100%;
+    height: 75%; /* Adjust as needed, leaves space for title */
+    margin-top: 20px;
+}
+
+.quadrant-card {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quadrant-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    border-color: var(--accent-color);
+}
+
+.quadrant-card .icon {
+    font-size: 3vw; /* Larger icon */
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+.quadrant-card h3 {
+    border: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+    font-size: 1.4vw;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.quadrant-card p {
+    font-size: 1vw;
+    color: var(--text-secondary);
+    margin: 0;
+    text-align: center;
+}
+
+/* Positioning with percentages */
+.q-top-left {
+    top: 0;
+    left: 0;
+    width: 48%;
+    height: 48%;
+}
+
+.q-top-right {
+    top: 0;
+    left: 52%;
+    width: 48%;
+    height: 48%;
+}
+
+.q-bottom-left {
+    top: 52%;
+    left: 0;
+    width: 48%;
+    height: 48%;
+}
+
+.q-bottom-right {
+    top: 52%;
+    left: 52%;
+    width: 48%;
+    height: 48%;
+}
+
+/* --- Page 2: Agenda Fill Layout --- */
+.agenda-list-fill {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Distribute items evenly */
+    height: 100%;
+}
+
+.agenda-list-fill .agenda-item {
+    flex-grow: 1; /* Allow items to grow and fill space */
+    margin-bottom: 15px;
+}
+.agenda-list-fill .agenda-item:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Page 6: Top/Bottom Split Layout --- */
+.split-container-top {
+    position: absolute;
+    top: 12%;
+    left: 5%;
+    width: 90%;
+    height: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.split-container-bottom {
+    position: absolute;
+    top: 62%;
+    left: 5%;
+    width: 90%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Force Mermaid SVG to fill container */
+.mermaid svg {
+    width: 100%;
+    height: 100%;
+}
+

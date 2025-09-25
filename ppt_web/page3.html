@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第一章：大模型的诞生三部曲</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="slide-body">
+
+    <h2>一个基础大模型的诞生：从“渊博的书呆子”到“贴心的伙伴”</h2>
+
+    <div class="three-step-container">
+        <!-- Step 1: Pre-training -->
+        <div id="step1" class="step-card">
+            <h3>阶段一：<br>预训练 (Pre-training)</h3>
+            <p>用整个互联网的数据学习语言规律，预测下一个词。产出的模型只会“文本续写”，不理解指令。</p>
+            <p class="key-info">产物：Qwen-7B</p>
+        </div>
+
+        <!-- Arrow 1 -->
+        <div id="arrow1" class="step-arrow">
+            <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+
+        <!-- Step 2: SFT -->
+        <div id="step2" class="step-card">
+            <h3>阶段二：<br>监督微调 (SFT)</h3>
+            <p>用人工标注的“指令-回答”数据对进行训练，让模型学会按人类的指令进行回答，但回答可能比较生硬。</p>
+            <p class="key-info">产物：具备交互雏形</p>
+        </div>
+
+        <!-- Arrow 2 -->
+        <div id="arrow2" class="step-arrow">
+            <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+
+        <!-- Step 3: RLHF -->
+        <div id="step3" class="step-card">
+            <h3>阶段三：<br>人类反馈强化学习 (RLHF)</h3>
+            <p>人工对回答排序，训练“奖励模型”，再用它引导模型优化答案，使之更符合人类偏好。</p>
+            <p class="key-info">产物：Qwen-7B-Instruct</p>
+        </div>
+    </div>
+
+</body>
+</html>

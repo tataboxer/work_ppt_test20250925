@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第四章：详解“独家菜谱” (RAG)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="slide-body">
+
+    <h2>详解“独家菜谱”：从精准问答(Q&A)起步</h2>
+
+    <div class="two-column-container">
+        <!-- Left Column: Text Content -->
+        <div class="column column-left">
+            <h4>当前阶段：高效、精准的“问答对”知识库</h4>
+            <p>我们目前处于RAG应用的第一阶段，将业务知识整理成直接的“一问一答”格式。</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>问题</th>
+                        <th>回答</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>科技馆的地址是？</td>
+                        <td>苏州科技馆的地址是金山东路85号。</td>
+                    </tr>
+                    <tr>
+                        <td>参观需要预约吗？</td>
+                        <td>需通过“苏州科技馆”小程序提前预约。</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4 style="margin-top: 30px;">当前价值</h4>
+            <ul>
+                <li><strong>精准可控：</strong>对明确问题，直接命中，100%准确。</li>
+                <li><strong>快速部署：</strong>易于创建和维护，能快速响应业务变化。</li>
+            </ul>
+
+            <p style="margin-top: 30px;"><strong>结论：</strong>我们从最务实的“问答对”起步，未来可以平滑升级到更强大的文档理解能力。</p>
+        </div>
+
+        <!-- Right Column: Image and Future Potential -->
+        <div class="column column-right">
+            <h4>RAG基本原理：RAG如同让AI先从知识库中检索资料，再组织语言回答</h4>
+            <img src="../pics/rag.png" alt="RAG 原理示意图" width="80%" height="80%">
+
+            <div style="text-align: left; width: 100%; margin-top: 30px;">
+                <h4 style="border: none; padding: 0; margin-bottom: 15px;">未来潜力</h4>
+                <ul>
+                    <li><i class="fas fa-file-alt" style="color: var(--accent-color);"></i> <strong>文档理解：</strong>让AI直接阅读PDF、Word报告。</li>
+                    <li><i class="fas fa-chart-pie" style="color: var(--accent-color);"></i> <strong>多模态理解：</strong>让AI看懂报告中的图表、图片。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
